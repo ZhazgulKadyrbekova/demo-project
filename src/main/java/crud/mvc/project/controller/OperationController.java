@@ -136,16 +136,6 @@ public class OperationController {
 
     @GetMapping("/filter")
     public String filterOperations(OperationFilterPayload operationFilterPayload, Model model) {
-//        System.out.println();
-//        System.out.println(operationFilterPayload.fromCashDeskIds);
-//        System.out.println(operationFilterPayload.toCashDeskIds);
-//        System.out.println(operationFilterPayload.dateFrom);
-//        System.out.println(operationFilterPayload.dateTo);
-//        System.out.println(operationFilterPayload.status);
-//        System.out.println(operationFilterPayload.currencies);
-//        System.out.println(operationFilterPayload.amountFrom);
-//        System.out.println(operationFilterPayload.amountTo);
-//        System.out.println();
         Page<OperationDto> operationDtos = operationEndpoint.filter(operationFilterPayload);
         List<CashDeskDto> dtos = cashDeskEndpoint.getAll();
         List<Currency> currencies = List.of(Currency.values());

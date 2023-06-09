@@ -1,6 +1,7 @@
-package crud.mvc.project.service;
+package crud.mvc.project.service.impl;
 
 import crud.mvc.project.entity.CashDeskAuth;
+import crud.mvc.project.service.CashDeskAuthEntityService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

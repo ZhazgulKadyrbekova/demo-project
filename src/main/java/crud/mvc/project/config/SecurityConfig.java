@@ -1,6 +1,6 @@
 package crud.mvc.project.config;
 
-import crud.mvc.project.service.CashDeskUserDetailsService;
+import crud.mvc.project.service.impl.CashDeskUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +19,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.cashDeskUserDetailsService = cashDeskUserDetailsService;
     }
 
+    private static final String[] SWAGGER_ENDPOINTS = {
+            // -- swagger ui
+            "/v2/api-docs",
+            "/configuration/ui/**",
+            "/swagger-resources/**",
+            "/configuration/security/**",
+            "/swagger-ui.html",
+            "/webjars/**"
+    };
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(cashDeskUserDetailsService);
@@ -29,11 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/login", "/css/**", "/js/**").permitAll()
+                    .antMatchers(SWAGGER_ENDPOINTS).permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
-                    .defaultSuccessUrl("/index") // Specify the default target URL after successful login
+                    .defaultSuccessUrl("/index")
                     .permitAll()
                     .and()
                 .logout()

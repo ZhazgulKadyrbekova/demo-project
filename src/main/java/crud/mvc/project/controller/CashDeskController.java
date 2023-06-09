@@ -3,7 +3,6 @@ package crud.mvc.project.controller;
 import crud.mvc.project.endpoint.CashDeskEndpoint;
 import crud.mvc.project.model.dto.CashDeskDto;
 import crud.mvc.project.model.payload.CashDeskCreatePayload;
-import crud.mvc.project.model.payload.CashDeskGetAllPayload;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -25,7 +24,7 @@ public class CashDeskController {
     }
 
     @GetMapping("/create")
-    public String createForm(Model model) {
+    public String createForm() {
         return "cashDeskCreate";
     }
 

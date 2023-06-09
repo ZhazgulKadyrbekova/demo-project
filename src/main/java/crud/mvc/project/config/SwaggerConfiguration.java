@@ -29,7 +29,7 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "My REST API",
+                "API documentation",
                 "Some custom description of API.",
                 "API TOS",
                 "Terms of service",
@@ -37,17 +37,6 @@ public class SwaggerConfiguration {
                 "myeaddress@company.com",
                 "License of API",
                 Collections.emptyList());
-    }
-
-    @Bean
-    public SecurityConfiguration security() {
-        return SecurityConfigurationBuilder.builder()
-                .appName("Demo project")
-                .clientId("Test")
-                .clientSecret("Test")
-                .scopeSeparator("")
-                .useBasicAuthenticationWithAccessCodeGrant(true)
-                .build();
     }
 
 }

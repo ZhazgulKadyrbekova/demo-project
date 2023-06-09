@@ -76,7 +76,7 @@ public class OperationCreateEndpointImpl implements OperationCreateEndpoint {
     }
 
     private void checkPhoneNumberInformation(String senderPhoneNumber, String receiverPhoneNumber) {
-        if (senderPhoneNumber.equals(receiverPhoneNumber)) {
+        if (senderPhoneNumber != null && receiverPhoneNumber != null && senderPhoneNumber.equals(receiverPhoneNumber)) {
             throw new CreateOperationException("senderPhoneNumber", "receiverPhoneNumber", senderPhoneNumber, receiverPhoneNumber);
         }
     }
