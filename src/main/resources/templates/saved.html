@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="general.html :: headerfiles">
+</head>
+<body>
+
+<nav th:replace="general.html :: header-navbar">
+</nav>
+
+<div>
+    <h6 th:text="|${operationCreateDto.senderName}, you send ${operationCreateDto.amount}
+                ${operationCreateDto.currency} to ${operationCreateDto.receiverName}. He/She can get money on
+                ${operationCreateDto.toCashDesk.name} with code ${operationCreateDto.code}. Please, do not share
+                code with anyone except receiver for security reasons.|"></h6>
+</div>
+
+<footer th:replace="general.html :: footer">
+</footer>
+
+</body>
+</html>

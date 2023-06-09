@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="general.html :: headerfiles">
+</head>
+<body>
+
+<nav th:replace="general.html :: header-navbar">
+</nav>
+
+<div>
+    <h6 th:text="|Operation with id ${updateDto.id} successfully completed.|"></h6>
+</div>
+
+<footer th:replace="general.html :: footer">
+</footer>
+
+</body>
+</html>

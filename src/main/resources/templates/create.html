@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="general.html :: headerfiles">
+</head>
+<body>
+
+<nav th:replace="general.html :: header-navbar">
+</nav>
+
+<!-- Main content -->
+<form method="POST" th:action="@{/operation/create}" th:object="${createPayload}">
+    <div class="mb-3">
+        <label for="formAmount" class="form-label">Amount</label>
+        <input type="number" name="amount" class="form-control" id="formAmount" placeholder="100">
+    </div>
+
+    <div class="mb-3">
+        <label for="toCashDesk">Choose toCashDesk</label>
+        <select type="number" class="form-select" id="toCashDesk" field="*{toCashDesk}" name="toCashDesk">
+            <option th:each="cashDesk : ${dtos}"
+                    th:value="${cashDesk.id}"
+                    th:text="${cashDesk.name} + '  -      ' + ${cashDesk.balance}"></option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="currency">Choose currency</label>
+        <select type="text" id="currency" class="form-select" field="*{currency}" name="currency">
+            <option th:each="currency: ${currencies}"
+                    th:value="${currency}"
+                    th:text="${currency}"></option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="formSenderName" class="form-label">Sender name</label>
+        <input class="form-control" name="senderName" id="formSenderName" placeholder="Name surname">
+    </div>
+    <div class="mb-3">
+        <label for="formSenderPhoneNumber" class="form-label">Sender phone number</label>
+        <input class="form-control" name="senderPhoneNumber" id="formSenderPhoneNumber" placeholder="Phone number">
+    </div>
+    <div class="mb-3">
+        <label for="formReceiverName" class="form-label">Receiver name</label>
+        <input class="form-control" name="receiverName" id="formReceiverName" placeholder="Name surname">
+    </div>
+    <div class="mb-3">
+        <label for="formReceiverPhoneNumber" class="form-label">Receiver phone number</label>
+        <input class="form-control" name="receiverPhoneNumber" id="formReceiverPhoneNumber" placeholder="Phone number">
+    </div>
+    <div class="mb-3">
+        <label for="formDescription" class="form-label">Description</label>
+        <input class="form-control" name="description" id="formDescription" placeholder="Description">
+    </div>
+    <button type="submit" name="submit" value="value" class="link-button btn btn-outline-success">Create</button>
+</form>
+
+
+<footer th:replace="general.html :: footer">
+</footer>
+
+</body>
+</html>

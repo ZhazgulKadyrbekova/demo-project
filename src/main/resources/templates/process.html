@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="general.html :: headerfiles">
+</head>
+<body>
+
+<nav th:replace="general.html :: header-navbar">
+</nav>
+
+<!-- Main content -->
+<form method="POST" th:action="@{/operation/process}" th:object="${processPayload}">
+    <div class="mb-3">
+        <label for="senderName" class="form-label">Sender name</label>
+        <input type="text" name="senderName" class="form-control" id="senderName" placeholder="Name surname">
+    </div>
+    <div class="mb-3">
+        <label for="receiverName" class="form-label">Receiver name</label>
+        <input type="text" name="receiverName" class="form-control" id="receiverName" placeholder="Name surname">
+    </div>
+    <div class="mb-3">
+        <label for="code" class="form-label">Code</label>
+        <input type="text" name="code" class="form-control" id="code" placeholder="Code">
+    </div>
+    <button type="submit" class="link-button btn btn-outline-success">Submit</button>
+</form>
+
+
+<footer th:replace="general.html :: footer">
+</footer>
+
+</body>
+</html>

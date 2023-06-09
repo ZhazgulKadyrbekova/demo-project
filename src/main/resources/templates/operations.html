@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="general.html :: headerfiles">
+</head>
+<body>
+
+<nav th:replace="general.html :: header-navbar">
+</nav>
+
+<div th:replace="general.html :: filter-table(${cashDeskDtos}, ${currencies}, ${statuses})">
+</div>
+
+<table th:replace="general.html :: operation-table(${operationDtos})">
+</table>
+
+<nav th:replace="general.html :: operation-table-pagination(${operationDtos}, ${pageNumbers})">
+</nav>
+
+<footer th:replace="general.html :: footer">
+</footer>
+
+</body>
+</html>
