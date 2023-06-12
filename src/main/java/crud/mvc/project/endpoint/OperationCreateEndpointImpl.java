@@ -11,6 +11,7 @@ import crud.mvc.project.model.request.OperationCreateRequest;
 import crud.mvc.project.service.CashDeskQueryService;
 import crud.mvc.project.service.OperationEntityService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -29,6 +30,7 @@ public class OperationCreateEndpointImpl implements OperationCreateEndpoint {
     }
 
     @Override
+    @Transactional
     public OperationCreateDto create(String cashDeskName, OperationCreatePayload createPayload) {
         checkBalanceInformation(createPayload.amount);
         checkNameInformation(createPayload.senderName, createPayload.receiverName);

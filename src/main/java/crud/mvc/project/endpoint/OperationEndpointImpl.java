@@ -10,6 +10,7 @@ import crud.mvc.project.service.OperationQueryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OperationEndpointImpl implements OperationEndpoint {
@@ -22,6 +23,7 @@ public class OperationEndpointImpl implements OperationEndpoint {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<OperationDto> getAll(OperationGetAllPayload operationGetAllPayload) {
 
         PageRequest request = PageRequest.of(
@@ -35,6 +37,7 @@ public class OperationEndpointImpl implements OperationEndpoint {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<OperationDto> search(OperationSearchPayload operationSearchPayload) {
 
         PageRequest request = PageRequest.of(
@@ -48,6 +51,7 @@ public class OperationEndpointImpl implements OperationEndpoint {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<OperationDto> filter(OperationFilterPayload operationFilterPayload) {
 
         PageRequest request = PageRequest.of(

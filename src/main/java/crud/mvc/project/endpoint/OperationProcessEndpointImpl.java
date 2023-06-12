@@ -17,6 +17,7 @@ import crud.mvc.project.service.CashDeskQueryService;
 import crud.mvc.project.service.OperationEntityService;
 import crud.mvc.project.service.OperationQueryService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -39,6 +40,7 @@ public class OperationProcessEndpointImpl implements OperationProcessEndpoint {
     }
 
     @Override
+    @Transactional
     public OperationUpdateDto process(String toCashDeskName, OperationProcessPayload processPayload) {
         CashDesk cashDesk = cashDeskQueryService.getByName(toCashDeskName);
         Operation operation = operationQueryService.getByCodeAndToCashDeskId(processPayload.code, cashDesk.getId());
