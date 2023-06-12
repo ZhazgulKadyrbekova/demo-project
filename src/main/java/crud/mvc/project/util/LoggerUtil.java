@@ -1,4 +1,4 @@
-package crud.mvc.project.config;
+package crud.mvc.project.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -4,7 +4,6 @@ import crud.mvc.project.entity.CashDesk;
 import crud.mvc.project.entity.Operation;
 import crud.mvc.project.exception.CreateOperationException;
 import crud.mvc.project.exception.InvalidMoneyAmountException;
-import crud.mvc.project.exception.InvalidPhoneNumberException;
 import crud.mvc.project.mapper.OperationMapperService;
 import crud.mvc.project.model.dto.OperationCreateDto;
 import crud.mvc.project.model.payload.OperationCreatePayload;
@@ -34,8 +33,6 @@ public class OperationCreateEndpointImpl implements OperationCreateEndpoint {
         checkBalanceInformation(createPayload.amount);
         checkNameInformation(createPayload.senderName, createPayload.receiverName);
         checkPhoneNumberInformation(createPayload.senderPhoneNumber, createPayload.receiverPhoneNumber);
-        checkPhoneNumberInformation(createPayload.senderPhoneNumber);
-        checkPhoneNumberInformation(createPayload.receiverPhoneNumber);
 
         CashDesk fromCashDesk = cashDeskQueryService.getByName(cashDeskName);
         CashDesk toCashDesk = cashDeskQueryService.getById(createPayload.toCashDesk);
@@ -49,8 +46,8 @@ public class OperationCreateEndpointImpl implements OperationCreateEndpoint {
                 toCashDesk,
                 createPayload.senderName,
                 createPayload.receiverName,
-                createPayload.senderPhoneNumber,
-                createPayload.receiverPhoneNumber,
+                createPayload.senderPhoneNumber == null ? null : createPayload.senderPhoneNumber.toString(),
+                createPayload.receiverPhoneNumber == null ? null : createPayload.receiverPhoneNumber.toString(),
                 createPayload.description
         );
         Operation operation = operationEntityService.create(operationCreateRequest);
@@ -75,19 +72,10 @@ public class OperationCreateEndpointImpl implements OperationCreateEndpoint {
         }
     }
 
-    private void checkPhoneNumberInformation(String senderPhoneNumber, String receiverPhoneNumber) {
-        if (senderPhoneNumber != null && receiverPhoneNumber != null && senderPhoneNumber.equals(receiverPhoneNumber)) {
+    private void checkPhoneNumberInformation(Long senderPhoneNumber, Long receiverPhoneNumber) {
+        if (senderPhoneNumber != null && receiverPhoneNumber != null &&
+                senderPhoneNumber != 0 && receiverPhoneNumber != 0 && senderPhoneNumber.equals(receiverPhoneNumber)) {
             throw new CreateOperationException("senderPhoneNumber", "receiverPhoneNumber", senderPhoneNumber, receiverPhoneNumber);
-        }
-    }
-
-    private void checkPhoneNumberInformation(String phoneNumber) {
-        if (phoneNumber == null) {
-            return;
-        }
-
-        if (!phoneNumber.startsWith("+")) {
-            throw new InvalidPhoneNumberException(phoneNumber);
         }
     }
 }

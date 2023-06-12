@@ -19,8 +19,10 @@ public class OperationCreatePayload {
     @NotNull
     @NotBlank(message = "Receiver's name can not be empty")
     public String receiverName;
-    public String senderPhoneNumber;
-    public String receiverPhoneNumber;
+    @Min(value = 996000000000L)
+    public Long senderPhoneNumber;
+    @Min(value = 996000000000L)
+    public Long receiverPhoneNumber;
     public String description;
 
     public BigDecimal getAmount() {
@@ -63,19 +65,19 @@ public class OperationCreatePayload {
         this.receiverName = receiverName;
     }
 
-    public String getSenderPhoneNumber() {
+    public Long getSenderPhoneNumber() {
         return senderPhoneNumber;
     }
 
-    public void setSenderPhoneNumber(String senderPhoneNumber) {
+    public void setSenderPhoneNumber(Long senderPhoneNumber) {
         this.senderPhoneNumber = senderPhoneNumber;
     }
 
-    public String getReceiverPhoneNumber() {
+    public Long getReceiverPhoneNumber() {
         return receiverPhoneNumber;
     }
 
-    public void setReceiverPhoneNumber(String receiverPhoneNumber) {
+    public void setReceiverPhoneNumber(Long receiverPhoneNumber) {
         this.receiverPhoneNumber = receiverPhoneNumber;
     }
 
