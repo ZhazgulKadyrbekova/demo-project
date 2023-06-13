@@ -19,9 +19,11 @@ public class CashDeskAuthEntityServiceImpl implements CashDeskAuthEntityService 
 
     @Override
     public CashDeskAuth create(CashDeskAuthCreateRequest createRequest) {
-        CashDeskAuth auth = new CashDeskAuth();
-        auth.setUsername(createRequest.username);
-        auth.setPassword(createRequest.password);
+        CashDeskAuth auth = CashDeskAuth.builder()
+                .username(createRequest.username)
+                .password(createRequest.password)
+                .role(createRequest.role)
+                .build();
         return repository.save(auth);
     }
 

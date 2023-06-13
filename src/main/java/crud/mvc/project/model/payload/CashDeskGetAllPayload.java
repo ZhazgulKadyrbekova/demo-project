@@ -1,8 +1,8 @@
 package crud.mvc.project.model.payload;
 
 public class CashDeskGetAllPayload {
-    public int page;
-    public int size;
+    public int page = 0;
+    public int size = 5;
 
     public int getPage() {
         return page;
@@ -18,13 +18,5 @@ public class CashDeskGetAllPayload {
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    public CashDeskGetAllPayload(int page, int size) {
-        this.page = page;
-        this.size = size;
-    }
-
-    public CashDeskGetAllPayload() {
     }
 }

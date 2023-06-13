@@ -1,105 +1,112 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="headerfiles">
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css"
+          integrity="sha512-mR/b5Y7FRsKqrYZou7uysnOdCIJib/7r5QeJMFvLNHNhtye3xJp1TdJVPLtetkukFn227nKpXD9OjUc09lx97Q=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
 
     <title>My Website</title>
 
     <link th:rel="stylesheet" th:href="@{assets/bootstrap-select-1.13.9/dist/css/bootstrap-select.css}"/>
     <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 </head>
-<body>
+<body class="container">
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="header-navbar">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/operation/create">Create operation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/operation/process">Process operation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/operation">Operations</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cash-desk/create">Create cash desk</a>
-                </li>
-            </ul>
-            <form class="d-flex" th:action="@{/operation/search}">
-                <input class="form-control me-2" id="search" name="search" type="search" placeholder="Search"
-                       aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
+    <div class="container-fluid" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-lg-0 d-flex align-items-center">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/operation">Operations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/operation/create">Create operation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/operation/process">Process operation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/cash-desk/get-all">Cash desks</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/logout}">Log out</a>
+            </li>
+        </ul>
+        <form class="d-flex" th:action="@{/operation/search}">
+            <input class="form-control me-2" id="search" name="search" type="search" placeholder="Search"
+                   aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
     </div>
 </nav>
 
 <div th:fragment="filter-table(cashDeskDtos, currencies, statuses)">
-    <form class="d-flex" th:action="@{/operation/filter}" th:object="${operationFilterPayload}">
-        <div class="col-mb-3">
-            <label for="fromCashDesk">from</label>
-            <select class="form-select" id="fromCashDesk" field="*{fromCashDeskIds}" name="fromCashDeskIds" multiple>
-                <option th:each="cashDesk : ${cashDeskDtos}"
-                        th:value="${cashDesk.id}"
-                        th:text="${cashDesk.name}"></option>
-            </select>
-        </div>
-        <div class="col-mb-3">
-            <label for="toCashDesk">to</label>
-            <select class="form-select" id="toCashDesk" field="*{toCashDeskIds}" name="toCashDeskIds" multiple>
-                <option th:each="cashDesk : ${cashDeskDtos}"
-                        th:value="${cashDesk.id}"
-                        th:text="${cashDesk.name}"></option>
-            </select>
-        </div>
-        <div class="col-mb-3">
+    <form class="d-flex flex-column" th:action="@{/operation/filter}" th:object="${operationFilterPayload}">
+        <div class="row mb-2">
+            <div class="col">
+                <label for="fromCashDesk">From cash desk</label>
+                <select class="selectpicker" id="fromCashDesk" name="fromCashDeskIds" multiple>
+                    <option data-hidden="true">Choose one...</option>
+                    <option th:each="cashDesk : ${cashDeskDtos}"
+                            th:value="${cashDesk.id}"
+                            th:text="${cashDesk.name}"></option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="toCashDesk">To cash desk</label>
+                <select class="selectpicker" id="toCashDesk" field="*{toCashDeskIds}" name="toCashDeskIds" multiple>
+                    <option th:each="cashDesk : ${cashDeskDtos}"
+                            th:value="${cashDesk.id}"
+                            th:text="${cashDesk.name}"></option>
+                </select>
+            </div>
+            <div class="col">
             <label for="currencies">Currency</label>
-            <select type="text" id="currencies" class="form-select" field="*{currency}" name="currencies" multiple>
+            <select class="selectpicker" type="text" id="currencies" field="*{currency}" name="currencies" multiple>
                 <option th:each="currency: ${currencies}"
                         th:value="${currency}"
                         th:text="${currency}"></option>
             </select>
         </div>
-        <div class="mb-3">
-            <label for="amountFrom" class="form-label">From amount</label>
-            <input type="number" name="amountFrom" class="form-control" id="amountFrom" placeholder="100">
+            <div class="col">
+                <label for="status">Status</label>
+                <select class="selectpicker" type="text" id="status" field="*{status}" name="status">
+                    <option value="">None</option>
+                    <option th:each="status: ${statuses}"
+                            th:value="${status}"
+                            th:text="${status}"></option>
+                </select>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="amountTo" class="form-label">To amount</label>
-            <input type="number" name="amountTo" class="form-control" id="amountTo" placeholder="1000">
-        </div>
-        <div class="col-mb-3">
-            <label for="status">Status</label>
-            <select type="text" id="status" class="form-select" field="*{status}" name="status">
-                <option value="">None</option>
-                <option th:each="status: ${statuses}"
-                        th:value="${status}"
-                        th:text="${status}"></option>
-            </select>
-        </div>
-        <div class="col-mb-3">
-            <label for="fromDate">From:</label>
-            <input type="datetime-local" class="form-control" id="fromDate" name="dateFrom">
-        </div>
-        <div class="col-mb-3">
+        <div class="row mb-2 align-items-end">
+            <div class="col">
+                <label for="amountFrom" class="form-label">From amount</label>
+                <input type="number" name="amountFrom" class="form-control" id="amountFrom" placeholder="100">
+            </div>
+            <div class="col">
+                <label for="amountTo" class="form-label">To amount</label>
+                <input type="number" name="amountTo" class="form-control" id="amountTo" placeholder="1000">
+            </div>
+            <div class="col">
+                <label for="fromDate">From:</label>
+                <input type="datetime-local" class="form-control" id="fromDate" name="dateFrom">
+            </div>
+            <div class="col">
             <label for="toDate">To:</label>
             <input type="datetime-local" class="form-control" id="toDate" name="dateTo">
         </div>
-        <button type="submit" class="link-button btn btn-outline-success">Filter</button>
+        <button type="submit" class="col link-button btn btn-outline-success">Filter</button>
+        </div>
     </form>
 </div>
 
@@ -109,13 +116,13 @@
         <th scope="col">#</th>
         <th scope="col">Amount</th>
         <th scope="col">Currency</th>
-        <th scope="col">From cash desk</th>
-        <th scope="col">To cash desk</th>
+        <th scope="col">From</th>
+        <th scope="col">To</th>
         <th scope="col">Status</th>
-        <th scope="col">Sender</th>
-        <th scope="col">Sender phone number</th>
-        <th scope="col">Receiver</th>
-        <th scope="col">Receiver phone number</th>
+        <th scope="col">Sender name</th>
+        <th scope="col">Phone number</th>
+        <th scope="col">Receiver name</th>
+        <th scope="col">Phone number</th>
         <th scope="col">Description</th>
     </tr>
     </thead>
@@ -136,7 +143,23 @@
     </tbody>
 </table>
 
-<nav aria-label="Page navigation" class="paging" th:fragment="operation-table-pagination(pageable, pageNumbers)">
+<table class="table" th:fragment="cash-desk-table(dtos)">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Balance</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cashDesk, cashDeskStat : ${dtos.content}">
+        <td th:text="${cashDeskStat.index+1}"></td>
+        <td th:text="${cashDesk.name}"></td>
+        <td th:text="${cashDesk.balance}"></td>
+    </tr>
+</table>
+
+<nav aria-label="Page navigation" class="paging" th:fragment="table-pagination(pageable, pageNumbers)">
     <ul class="pagination" th:object="${pageable}" th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
         <li class="page-item" th:class="${pageable.first} ? 'disabled' : ''">
             <a th:if="${not pageable.first}" th:href="${urlBuilder.replaceQueryParam('page', pageable.number - 1).toUriString()}"
@@ -158,15 +181,24 @@
 </nav>
 
 <footer th:fragment="footer">
-    <script crossorigin="anonymous"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"
+            integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <script th:src="@{assets/bootstrap-select-1.13.9/dist/js/bootstrap-select.js}"></script>
+    <script th:src="@{assets/bootstrap-select-1.14.0/dist/js/bootstrap-select.js}"></script>
 </footer>
 </body>
 </html>

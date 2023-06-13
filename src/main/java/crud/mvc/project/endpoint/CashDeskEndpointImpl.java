@@ -1,14 +1,19 @@
 package crud.mvc.project.endpoint;
 
 import crud.mvc.project.entity.CashDesk;
+import crud.mvc.project.entity.CashDeskAuth;
+import crud.mvc.project.entity.CashDeskRole;
 import crud.mvc.project.mapper.CashDeskMapperService;
 import crud.mvc.project.model.dto.CashDeskDto;
 import crud.mvc.project.model.payload.CashDeskCreatePayload;
+import crud.mvc.project.model.payload.CashDeskGetAllPayload;
 import crud.mvc.project.model.request.CashDeskAuthCreateRequest;
 import crud.mvc.project.model.request.CashDeskCreateRequest;
 import crud.mvc.project.service.CashDeskAuthEntityService;
 import crud.mvc.project.service.CashDeskEntityService;
 import crud.mvc.project.service.CashDeskQueryService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,17 +43,19 @@ public class CashDeskEndpointImpl implements CashDeskEndpoint {
 
     @Override
     @Transactional
-    public CashDeskDto create(CashDeskCreatePayload cashDeskCreatePayload) {
+    public CashDeskDto create(CashDeskCreatePayload cashDeskCreatePayload, CashDeskRole role) {
         String password = encoder.encode(cashDeskCreatePayload.password);
         CashDeskAuthCreateRequest authCreateRequest = new CashDeskAuthCreateRequest(
-                cashDeskCreatePayload.name,
-                password
+                cashDeskCreatePayload.username,
+                password,
+                role
         );
-        authEntityService.create(authCreateRequest);
+        CashDeskAuth auth = authEntityService.create(authCreateRequest);
 
         CashDeskCreateRequest createRequest = new CashDeskCreateRequest(
                 cashDeskCreatePayload.balance,
-                cashDeskCreatePayload.name
+                cashDeskCreatePayload.name,
+                auth
         );
         CashDesk cashDesk = entityService.create(createRequest);
 
@@ -65,4 +72,15 @@ public class CashDeskEndpointImpl implements CashDeskEndpoint {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Page<CashDeskDto> getAll(CashDeskGetAllPayload payload) {
+        PageRequest request = PageRequest.of(
+                payload.page,
+                payload.size
+        );
+        return queryService
+                .getAll(request)
+                .map(mapperService::mapToDto);
+    }
 }

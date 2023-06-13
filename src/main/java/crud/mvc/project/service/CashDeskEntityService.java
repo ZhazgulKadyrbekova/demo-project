@@ -13,6 +13,6 @@ public interface CashDeskEntityService {
     CashDesk create(CashDeskCreateRequest model);
     CashDesk findByQuery(BooleanBuilder booleanBuilder);
     CashDesk update(CashDesk cashDesk, CashDeskUpdateRequest model);
-    //    CashDesk getByPrincipal(AuthPrincipalDetails authPrincipalDetails);
     List<CashDesk> findAll(BooleanBuilder booleanBuilder);
+    Page<CashDesk> findAll(BooleanBuilder booleanBuilder, PageRequest request);
 }

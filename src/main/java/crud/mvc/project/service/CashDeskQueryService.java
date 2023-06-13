@@ -11,4 +11,5 @@ public interface CashDeskQueryService {
     CashDesk findById(long cashDeskId);
     CashDesk getByName(String name);
     List<CashDesk> getAll();
+    Page<CashDesk> getAll(PageRequest request);
 }

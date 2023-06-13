@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="general.html :: headerfiles">
 </head>
-<body>
+<body class="container">
 
 <nav th:replace="general.html :: header-navbar">
 </nav>
 
 <!-- Main content -->
-<form method="POST" th:action="@{/operation/process}" th:object="${processPayload}">
+<form method="POST" th:action="@{/operation/process}" th:object="${processPayload}" class="w-75 mx-auto">
     <div class="mb-3">
         <label for="senderName" class="form-label">Sender name</label>
         <input type="text" name="senderName" class="form-control" id="senderName" placeholder="Name surname">

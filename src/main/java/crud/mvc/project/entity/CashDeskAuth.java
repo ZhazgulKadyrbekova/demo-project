@@ -1,5 +1,9 @@
 package crud.mvc.project.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +12,10 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cash_desk_auth")
 public class CashDeskAuth implements UserDetails {
 
@@ -22,29 +30,13 @@ public class CashDeskAuth implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    public CashDeskAuth() {
-    }
-
-    public CashDeskAuth(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private CashDeskRole role;
 
     @Override
     public List<GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("CASH_DESK"));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

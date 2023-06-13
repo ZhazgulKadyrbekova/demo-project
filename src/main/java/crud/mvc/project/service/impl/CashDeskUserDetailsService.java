@@ -25,7 +25,7 @@ public class CashDeskUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         CashDeskAuth cashDeskAuth = entityService.findByUsername(username);
         List<SimpleGrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority("CASH_DESK"));
+        roles.add(new SimpleGrantedAuthority(cashDeskAuth.getRole().name()));
         return new User(cashDeskAuth.getUsername(), cashDeskAuth.getPassword(), roles);
     }
 }

@@ -10,8 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class OperationEntityServiceImpl implements OperationEntityService {
 
@@ -23,16 +21,17 @@ public class OperationEntityServiceImpl implements OperationEntityService {
 
     @Override
     public Operation create(OperationCreateRequest model) {
-        Operation operation = new Operation();
-        operation.setAmount(model.amount);
-        operation.setCurrency(model.currency);
-        operation.setFromCashDesk(model.fromCashDesk);
-        operation.setToCashDesk(model.toCashDesk);
-        operation.setSenderName(model.senderName);
-        operation.setReceiverName(model.receiverName);
-        operation.setSenderPhoneNumber(model.senderPhoneNumber);
-        operation.setReceiverPhoneNumber(model.receiverPhoneNumber);
-        operation.setDescription(model.description);
+        Operation operation = Operation.builder()
+                .amount(model.amount)
+                .currency(model.currency)
+                .fromCashDesk(model.fromCashDesk)
+                .toCashDesk(model.toCashDesk)
+                .senderName(model.senderName)
+                .receiverName(model.receiverName)
+                .senderPhoneNumber(model.senderPhoneNumber)
+                .receiverPhoneNumber(model.receiverPhoneNumber)
+                .description(model.description)
+                .build();
 
         return repository.save(operation);
     }

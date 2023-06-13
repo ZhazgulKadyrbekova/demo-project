@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="general.html :: headerfiles">
 </head>
-<body>
+<body class="container">
 
 <nav th:replace="general.html :: header-navbar">
 </nav>
 
 <!-- Main content -->
-<form method="POST" th:action="@{/operation/create}" th:object="${createPayload}">
+<form method="POST" th:action="@{/operation/create}" th:object="${createPayload}" class="w-75 mx-auto">
     <div class="mb-3">
         <label for="formAmount" class="form-label">Amount</label>
         <input type="number" name="amount" class="form-control" id="formAmount" placeholder="100">
@@ -19,7 +21,7 @@
         <select type="number" class="form-select" id="toCashDesk" field="*{toCashDesk}" name="toCashDesk">
             <option th:each="cashDesk : ${dtos}"
                     th:value="${cashDesk.id}"
-                    th:text="${cashDesk.name} + '  -      ' + ${cashDesk.balance}"></option>
+                    th:text="${cashDesk.name}"></option>
         </select>
     </div>
 

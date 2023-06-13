@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="general.html :: headerfiles">
 </head>
-<body>
+<body class="container">
 
 <nav th:replace="general.html :: header-navbar">
 </nav>
 
-<div>
+<div class="w-50 mx-auto">
     <h6 th:text="|Operation with id ${updateDto.id} successfully completed.|"></h6>
 </div>
 

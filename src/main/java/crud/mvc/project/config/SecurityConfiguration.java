@@ -3,19 +3,17 @@ package crud.mvc.project.config;
 import crud.mvc.project.service.impl.CashDeskUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration {
 
     private final CashDeskUserDetailsService cashDeskUserDetailsService;
 
-    public SecurityConfig(CashDeskUserDetailsService cashDeskUserDetailsService) {
+    public SecurityConfiguration(CashDeskUserDetailsService cashDeskUserDetailsService) {
         this.cashDeskUserDetailsService = cashDeskUserDetailsService;
     }
 
@@ -29,14 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**"
     };
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(cashDeskUserDetailsService);
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .userDetailsService(cashDeskUserDetailsService)
                 .authorizeRequests()
                     .antMatchers("/login", "/css/**", "/js/**").permitAll()
                     .antMatchers(SWAGGER_ENDPOINTS).permitAll()
@@ -50,11 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                     .logoutUrl("/logout")
                     .permitAll();
-    }
-
-    @Bean
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
+        return httpSecurity.build();
     }
 }

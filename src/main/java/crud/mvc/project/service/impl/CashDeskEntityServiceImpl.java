@@ -6,6 +6,7 @@ import crud.mvc.project.model.request.CashDeskCreateRequest;
 import crud.mvc.project.model.request.CashDeskUpdateRequest;
 import crud.mvc.project.repository.CashDeskRepository;
 import crud.mvc.project.service.CashDeskEntityService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +23,11 @@ public class CashDeskEntityServiceImpl implements CashDeskEntityService {
 
     @Override
     public CashDesk create(CashDeskCreateRequest model) {
-        CashDesk cashDesk = new CashDesk();
-        cashDesk.setBalance(model.balance);
-        cashDesk.setName(model.name);
+        CashDesk cashDesk = CashDesk.builder()
+                .balance(model.balance)
+                .name(model.name)
+                .auth(model.auth)
+                .build();
 
         return repository.save(cashDesk);
     }
@@ -45,8 +48,8 @@ public class CashDeskEntityServiceImpl implements CashDeskEntityService {
         return (List<CashDesk>) repository.findAll(booleanBuilder);
     }
 
-//    @Override
-//    public CashDesk getByPrincipal(AuthPrincipalDetails authPrincipalDetails) {
-//        return entityManager.getReference(CashDesk.class, authPrincipalDetails.getId());
-//    }
+    @Override
+    public Page<CashDesk> findAll(BooleanBuilder booleanBuilder, PageRequest request) {
+        return repository.findAll(booleanBuilder, request);
+    }
 }

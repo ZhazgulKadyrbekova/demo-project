@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="general.html :: headerfiles">
+</head>
+<body class="container">
+
+<nav th:replace="general.html :: header-navbar">
+</nav>
+
+<div class="w-75 mx-auto">
+
+    <table th:replace="general.html :: cash-desk-table(${cashDeskDtos})">
+    </table>
+
+    <div sec:authorize="hasAuthority('ADMIN')" class="w-50 mb-2">
+        <form class="d-flex" th:action="@{/cash-desk/create}">
+            <button class="btn btn-outline-success" type="submit">Create new cash desk</button>
+        </form>
+    </div>
+
+    <nav th:replace="general.html :: table-pagination(${cashDeskDtos}, ${pageNumbers})">
+    </nav>
+
+</div>
+
+<footer th:replace="general.html :: footer">
+</footer>
+
+</body>
+</html>

@@ -1,11 +1,19 @@
 package crud.mvc.project.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-//    currency always in som
 @Entity
-@Table(name = "cash_desk")      //касса банка
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "cash_desk")      //касса банка, currency always in som
 public class CashDesk {
 
     @Id
@@ -22,40 +30,4 @@ public class CashDesk {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cash_desk_auth_id")
     private CashDeskAuth auth;
-
-    public CashDesk() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public CashDesk(String name, BigDecimal balance) {
-        this.name = name;
-        this.balance = balance;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    public CashDeskAuth getAuth() {
-        return auth;
-    }
-
-    public void setAuth(CashDeskAuth auth) {
-        this.auth = auth;
-    }
 }

@@ -1,15 +1,17 @@
 package crud.mvc.project.model.request;
 
 import crud.mvc.project.entity.OperationStatus;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
+@Getter
+@Setter
+@AllArgsConstructor
 public class OperationUpdateRequest {
     public BigDecimal totalAmount;
     public OperationStatus status;
 
-    public OperationUpdateRequest(BigDecimal totalAmount, OperationStatus status) {
-        this.totalAmount = totalAmount;
-        this.status = status;
-    }
 }

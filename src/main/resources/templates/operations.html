@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="general.html :: headerfiles">
 </head>
-<body>
+<body class="container">
 
 <nav th:replace="general.html :: header-navbar">
 </nav>
@@ -13,7 +15,7 @@
 <table th:replace="general.html :: operation-table(${operationDtos})">
 </table>
 
-<nav th:replace="general.html :: operation-table-pagination(${operationDtos}, ${pageNumbers})">
+<nav th:replace="general.html :: table-pagination(${operationDtos}, ${pageNumbers})">
 </nav>
 
 <footer th:replace="general.html :: footer">

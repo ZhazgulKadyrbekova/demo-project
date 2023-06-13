@@ -54,4 +54,11 @@ public class CashDeskQueryServiceImpl implements CashDeskQueryService {
 
         return entityService.findAll(builder);
     }
+
+    @Override
+    public Page<CashDesk> getAll(PageRequest request) {
+        BooleanBuilder builder = new BooleanBuilder();
+
+        return entityService.findAll(builder, request);
+    }
 }

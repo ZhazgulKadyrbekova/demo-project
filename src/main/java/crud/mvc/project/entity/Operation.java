@@ -1,12 +1,21 @@
 package crud.mvc.project.entity;
 
-import javax.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "operation")
 public class Operation {
 
     @Id
@@ -57,121 +66,10 @@ public class Operation {
     @Column(name = "created_date", nullable = false)
     private LocalDateTime createdDate;
 
-    public Operation() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public CashDesk getFromCashDesk() {
-        return fromCashDesk;
-    }
-
-    public void setFromCashDesk(CashDesk fromCashDesk) {
-        this.fromCashDesk = fromCashDesk;
-    }
-
-    public CashDesk getToCashDesk() {
-        return toCashDesk;
-    }
-
-    public void setToCashDesk(CashDesk toCashDesk) {
-        this.toCashDesk = toCashDesk;
-    }
-
-    public OperationStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OperationStatus status) {
-        this.status = status;
-    }
-
-    public String getSenderName() {
-        return senderName;
-    }
-
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
-    }
-
-    public String getReceiverName() {
-        return receiverName;
-    }
-
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
-    }
-
-    public String getSenderPhoneNumber() {
-        return senderPhoneNumber;
-    }
-
-    public void setSenderPhoneNumber(String senderPhoneNumber) {
-        this.senderPhoneNumber = senderPhoneNumber;
-    }
-
-    public String getReceiverPhoneNumber() {
-        return receiverPhoneNumber;
-    }
-
-    public void setReceiverPhoneNumber(String receiverPhoneNumber) {
-        this.receiverPhoneNumber = receiverPhoneNumber;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public BigDecimal getSomAmount() {
-        return somAmount;
-    }
-
-    public void setSomAmount(BigDecimal somAmount) {
-        this.somAmount = somAmount;
-    }
-
-    private void generateCode() {
-        this.code = UUID.randomUUID().toString();
-    }
-
     @PrePersist
     public void init(){
-        setCreatedDate(LocalDateTime.now());
-        setStatus(OperationStatus.CREATED);
-        generateCode();
+        this.createdDate  = LocalDateTime.now();
+        this.status = OperationStatus.CREATED;
+        this.code = UUID.randomUUID().toString();
     }
 }

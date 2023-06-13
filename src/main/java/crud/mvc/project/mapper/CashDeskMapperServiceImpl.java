@@ -11,8 +11,8 @@ public class CashDeskMapperServiceImpl implements CashDeskMapperService {
     public CashDeskDto mapToDto(CashDesk cashDesk) {
         return new CashDeskDto(
                 cashDesk.getId(),
-                cashDesk.getBalance(),
-                cashDesk.getName()
+                cashDesk.getName(),
+                cashDesk.getBalance()
         );
     }
 }
