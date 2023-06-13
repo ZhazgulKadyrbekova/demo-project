@@ -1,5 +1,6 @@
-package crud.mvc.project.endpoint;
+package crud.mvc.project.endpoint.impl;
 
+import crud.mvc.project.endpoint.OperationEndpoint;
 import crud.mvc.project.exception.OperationFilterException;
 import crud.mvc.project.mapper.OperationMapperService;
 import crud.mvc.project.model.dto.OperationDto;

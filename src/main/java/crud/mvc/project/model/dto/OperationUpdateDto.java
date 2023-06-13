@@ -1,6 +1,6 @@
 package crud.mvc.project.model.dto;
 
-import crud.mvc.project.entity.OperationStatus;
+import crud.mvc.project.entity.enums.OperationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

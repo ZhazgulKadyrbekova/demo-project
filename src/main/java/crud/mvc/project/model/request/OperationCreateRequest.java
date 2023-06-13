@@ -1,7 +1,7 @@
 package crud.mvc.project.model.request;
 
 import crud.mvc.project.entity.CashDesk;
-import crud.mvc.project.entity.Currency;
+import crud.mvc.project.entity.enums.Currency;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,8 @@
-package crud.mvc.project.mapper;
+package crud.mvc.project.mapper.impl;
 
 import crud.mvc.project.entity.Operation;
+import crud.mvc.project.mapper.CashDeskMapperService;
+import crud.mvc.project.mapper.OperationMapperService;
 import crud.mvc.project.model.dto.CashDeskDto;
 import crud.mvc.project.model.dto.OperationCreateDto;
 import crud.mvc.project.model.dto.OperationDto;

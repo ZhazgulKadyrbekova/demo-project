@@ -1,8 +1,9 @@
-package crud.mvc.project.endpoint;
+package crud.mvc.project.endpoint.impl;
 
+import crud.mvc.project.endpoint.CashDeskEndpoint;
 import crud.mvc.project.entity.CashDesk;
 import crud.mvc.project.entity.CashDeskAuth;
-import crud.mvc.project.entity.CashDeskRole;
+import crud.mvc.project.entity.enums.CashDeskRole;
 import crud.mvc.project.mapper.CashDeskMapperService;
 import crud.mvc.project.model.dto.CashDeskDto;
 import crud.mvc.project.model.payload.CashDeskCreatePayload;
@@ -42,22 +43,18 @@ public class CashDeskEndpointImpl implements CashDeskEndpoint {
     }
 
     @Override
-    @Transactional
-    public CashDeskDto create(CashDeskCreatePayload cashDeskCreatePayload, CashDeskRole role) {
-        String password = encoder.encode(cashDeskCreatePayload.password);
-        CashDeskAuthCreateRequest authCreateRequest = new CashDeskAuthCreateRequest(
-                cashDeskCreatePayload.username,
-                password,
-                role
-        );
-        CashDeskAuth auth = authEntityService.create(authCreateRequest);
+    public CashDeskDto createAdmin(CashDeskCreatePayload cashDeskCreatePayload) {
+        CashDeskRole role = CashDeskRole.ADMIN;
+        CashDesk cashDesk = create(cashDeskCreatePayload, role);
 
-        CashDeskCreateRequest createRequest = new CashDeskCreateRequest(
-                cashDeskCreatePayload.balance,
-                cashDeskCreatePayload.name,
-                auth
-        );
-        CashDesk cashDesk = entityService.create(createRequest);
+        return mapperService.mapToDto(cashDesk);
+    }
+
+    @Override
+    @Transactional
+    public CashDeskDto create(CashDeskCreatePayload cashDeskCreatePayload) {
+        CashDeskRole role = CashDeskRole.CASH_DESK;
+        CashDesk cashDesk = create(cashDeskCreatePayload, role);
 
         return mapperService.mapToDto(cashDesk);
     }
@@ -82,5 +79,22 @@ public class CashDeskEndpointImpl implements CashDeskEndpoint {
         return queryService
                 .getAll(request)
                 .map(mapperService::mapToDto);
+    }
+
+    private CashDesk create(CashDeskCreatePayload cashDeskCreatePayload, CashDeskRole role) {
+        String password = encoder.encode(cashDeskCreatePayload.password);
+        CashDeskAuthCreateRequest authCreateRequest = new CashDeskAuthCreateRequest(
+                cashDeskCreatePayload.username,
+                password,
+                role
+        );
+        CashDeskAuth auth = authEntityService.create(authCreateRequest);
+
+        CashDeskCreateRequest createRequest = new CashDeskCreateRequest(
+                cashDeskCreatePayload.balance,
+                cashDeskCreatePayload.name,
+                auth
+        );
+        return entityService.create(createRequest);
     }
 }

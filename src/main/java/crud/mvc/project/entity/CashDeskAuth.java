@@ -1,5 +1,6 @@
 package crud.mvc.project.entity;
 
+import crud.mvc.project.entity.enums.CashDeskRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

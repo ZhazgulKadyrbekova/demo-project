@@ -1,6 +1,6 @@
 package crud.mvc.project.model.dto;
 
-import crud.mvc.project.entity.Currency;
+import crud.mvc.project.entity.enums.Currency;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

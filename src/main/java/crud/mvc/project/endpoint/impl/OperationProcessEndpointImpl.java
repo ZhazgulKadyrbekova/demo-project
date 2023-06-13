@@ -1,9 +1,10 @@
-package crud.mvc.project.endpoint;
+package crud.mvc.project.endpoint.impl;
 
+import crud.mvc.project.endpoint.OperationProcessEndpoint;
 import crud.mvc.project.entity.CashDesk;
-import crud.mvc.project.entity.Currency;
+import crud.mvc.project.entity.enums.Currency;
 import crud.mvc.project.entity.Operation;
-import crud.mvc.project.entity.OperationStatus;
+import crud.mvc.project.entity.enums.OperationStatus;
 import crud.mvc.project.exception.AlreadyCompletedOperationException;
 import crud.mvc.project.exception.InsufficientFundsException;
 import crud.mvc.project.exception.InvalidInformationException;

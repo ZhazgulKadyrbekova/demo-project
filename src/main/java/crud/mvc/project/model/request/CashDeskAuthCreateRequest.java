@@ -1,6 +1,6 @@
 package crud.mvc.project.model.request;
 
-import crud.mvc.project.entity.CashDeskRole;
+import crud.mvc.project.entity.enums.CashDeskRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

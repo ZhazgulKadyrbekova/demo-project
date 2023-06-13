@@ -1,7 +1,7 @@
 package crud.mvc.project.model.payload;
 
-import crud.mvc.project.entity.Currency;
-import crud.mvc.project.entity.OperationStatus;
+import crud.mvc.project.entity.enums.Currency;
+import crud.mvc.project.entity.enums.OperationStatus;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;

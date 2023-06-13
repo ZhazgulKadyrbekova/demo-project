@@ -1,7 +1,6 @@
 package crud.mvc.project.controller;
 
 import crud.mvc.project.endpoint.CashDeskEndpoint;
-import crud.mvc.project.entity.CashDeskRole;
 import crud.mvc.project.model.dto.CashDeskDto;
 import crud.mvc.project.model.payload.CashDeskCreatePayload;
 import crud.mvc.project.model.payload.CashDeskGetAllPayload;
@@ -35,7 +34,7 @@ public class CashDeskController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute @Validated CashDeskCreatePayload cashDeskCreatePayload, Model model) {
-        cashDeskEndpoint.create(cashDeskCreatePayload, CashDeskRole.CASH_DESK);
+        cashDeskEndpoint.create(cashDeskCreatePayload);
 
         return "redirect:/cash-desk/get-all";
     }

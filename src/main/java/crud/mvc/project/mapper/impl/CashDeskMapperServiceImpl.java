@@ -1,6 +1,7 @@
-package crud.mvc.project.mapper;
+package crud.mvc.project.mapper.impl;
 
 import crud.mvc.project.entity.CashDesk;
+import crud.mvc.project.mapper.CashDeskMapperService;
 import crud.mvc.project.model.dto.CashDeskDto;
 import org.springframework.stereotype.Service;
 

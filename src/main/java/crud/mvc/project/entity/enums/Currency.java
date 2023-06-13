@@ -1,4 +1,4 @@
-package crud.mvc.project.entity;
+package crud.mvc.project.entity.enums;
 
 import java.math.BigDecimal;
 

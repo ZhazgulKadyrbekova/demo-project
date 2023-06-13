@@ -1,5 +1,6 @@
-package crud.mvc.project.endpoint;
+package crud.mvc.project.endpoint.impl;
 
+import crud.mvc.project.endpoint.OperationCreateEndpoint;
 import crud.mvc.project.entity.CashDesk;
 import crud.mvc.project.entity.Operation;
 import crud.mvc.project.exception.CreateOperationException;

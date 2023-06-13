@@ -3,7 +3,6 @@ package crud.mvc.project.boot;
 
 import crud.mvc.project.endpoint.CashDeskEndpoint;
 import crud.mvc.project.entity.CashDesk;
-import crud.mvc.project.entity.CashDeskRole;
 import crud.mvc.project.model.payload.CashDeskCreatePayload;
 import crud.mvc.project.service.CashDeskQueryService;
 import org.springframework.boot.CommandLineRunner;
@@ -35,6 +34,6 @@ public class Init implements CommandLineRunner {
                 new BigDecimal(20_000),
                 "password_cash_desk_1"
         );
-        endpoint.create(createPayload, CashDeskRole.ADMIN);
+        endpoint.createAdmin(createPayload);
     }
 }

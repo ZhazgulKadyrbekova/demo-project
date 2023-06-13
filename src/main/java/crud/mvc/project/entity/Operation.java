@@ -1,5 +1,7 @@
 package crud.mvc.project.entity;
 
+import crud.mvc.project.entity.enums.Currency;
+import crud.mvc.project.entity.enums.OperationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
