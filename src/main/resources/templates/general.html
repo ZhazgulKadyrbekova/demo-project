@@ -5,6 +5,7 @@
 <head th:fragment="headerfiles">
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/pexels.ico}"/>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
           rel="stylesheet"
@@ -39,7 +40,7 @@
                 <a class="nav-link" href="/cash-desk/get-all">Cash desks</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/logout}">Log out</a>
+                <a class="nav-link text-danger" th:href="@{/logout}">Log out</a>
             </li>
         </ul>
         <form class="d-flex" th:action="@{/operation/search}">
@@ -113,7 +114,6 @@
 <table class="table" th:fragment="operation-table(dtos)">
     <thead>
     <tr>
-        <th scope="col">#</th>
         <th scope="col">Amount</th>
         <th scope="col">Currency</th>
         <th scope="col">From</th>
@@ -127,8 +127,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="operation, operationStat : ${dtos.content}">
-        <td th:text="${operationStat.index+1}"></td>
+    <tr th:each="operation : ${dtos.content}">
         <td th:text="${operation.amount}"></td>
         <td th:text="${operation.currency}"></td>
         <td th:text="${operation.fromCashDesk.name}"></td>
@@ -146,14 +145,12 @@
 <table class="table" th:fragment="cash-desk-table(dtos)">
     <thead>
     <tr>
-        <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Balance</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="cashDesk, cashDeskStat : ${dtos.content}">
-        <td th:text="${cashDeskStat.index+1}"></td>
+    <tr th:each="cashDesk : ${dtos.content}">
         <td th:text="${cashDesk.name}"></td>
         <td th:text="${cashDesk.balance}"></td>
     </tr>
@@ -162,19 +159,19 @@
 <nav aria-label="Page navigation" class="paging" th:fragment="table-pagination(pageable, pageNumbers)">
     <ul class="pagination" th:object="${pageable}" th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
         <li class="page-item" th:class="${pageable.first} ? 'disabled' : ''">
-            <a th:if="${not pageable.first}" th:href="${urlBuilder.replaceQueryParam('page', pageable.number - 1).toUriString()}"
+            <a th:if="${not pageable.first}" th:href="${urlBuilder.replaceQueryParam('page', pageable.number - 1).build().toUriString()}"
                class="page-link" aria-label="Previous">Previous</a>
         </li>
 
         <li class="page-item pagination" th:each="pageNumber : ${pageNumbers}">
-            <a th:href="${urlBuilder.replaceQueryParam('page', pageNumber - 1).toUriString()}"
+            <a th:href="${urlBuilder.replaceQueryParam('page', pageNumber - 1).build().toUriString()}"
                th:text="${pageNumber}"
                class="page-link"></a>
         </li>
 
 
         <li class="page-item" th:class="${pageable.last} ? 'disabled' : ''">
-            <a th:if="${not pageable.last}" th:href="${urlBuilder.replaceQueryParam('page', pageable.number + 1).toUriString()}"
+            <a th:if="${not pageable.last}" th:href="${urlBuilder.replaceQueryParam('page', pageable.number + 1).build().toUriString()}"
                class="page-link"  aria-label="Next">Next</a>
         </li>
     </ul>

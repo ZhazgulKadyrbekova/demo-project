@@ -17,23 +17,14 @@ public class SecurityConfiguration {
         this.cashDeskUserDetailsService = cashDeskUserDetailsService;
     }
 
-    private static final String[] SWAGGER_ENDPOINTS = {
-            // -- swagger ui
-            "/v2/api-docs",
-            "/configuration/ui/**",
-            "/swagger-resources/**",
-            "/configuration/security/**",
-            "/swagger-ui.html",
-            "/webjars/**"
-    };
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .userDetailsService(cashDeskUserDetailsService)
                 .authorizeRequests()
                     .antMatchers("/login", "/css/**", "/js/**").permitAll()
-                    .antMatchers(SWAGGER_ENDPOINTS).permitAll()
+                    .antMatchers("/actuator/**").permitAll()
+                    .antMatchers("/api-docs/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

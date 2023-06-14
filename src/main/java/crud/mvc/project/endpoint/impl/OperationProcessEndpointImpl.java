@@ -43,7 +43,7 @@ public class OperationProcessEndpointImpl implements OperationProcessEndpoint {
     @Override
     @Transactional
     public OperationUpdateDto process(String toCashDeskName, OperationProcessPayload processPayload) {
-        CashDesk cashDesk = cashDeskQueryService.getByName(toCashDeskName);
+        CashDesk cashDesk = cashDeskQueryService.getByUsername(toCashDeskName);
         Operation operation = operationQueryService.getByCodeAndToCashDeskId(processPayload.code, cashDesk.getId());
 
         if (operation.getStatus() == OperationStatus.COMPLETED) {

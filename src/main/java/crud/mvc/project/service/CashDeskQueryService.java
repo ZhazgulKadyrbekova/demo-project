@@ -9,7 +9,7 @@ import java.util.List;
 public interface CashDeskQueryService {
     CashDesk getById(long cashDeskId);
     CashDesk findById(long cashDeskId);
-    CashDesk getByName(String name);
+    CashDesk getByUsername(String username);
     List<CashDesk> getAll();
     Page<CashDesk> getAll(PageRequest request);
 }

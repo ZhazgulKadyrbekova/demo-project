@@ -8,8 +8,6 @@ import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
-import crud.mvc.project.entity.enums.Currency;
-import crud.mvc.project.entity.enums.OperationStatus;
 
 
 /**
@@ -30,7 +28,7 @@ public class QOperation extends EntityPathBase<Operation> {
 
     public final DateTimePath<java.time.LocalDateTime> createdDate = createDateTime("createdDate", java.time.LocalDateTime.class);
 
-    public final EnumPath<Currency> currency = createEnum("currency", Currency.class);
+    public final EnumPath<crud.mvc.project.entity.enums.Currency> currency = createEnum("currency", crud.mvc.project.entity.enums.Currency.class);
 
     public final StringPath description = createString("description");
 
@@ -48,7 +46,7 @@ public class QOperation extends EntityPathBase<Operation> {
 
     public final NumberPath<java.math.BigDecimal> somAmount = createNumber("somAmount", java.math.BigDecimal.class);
 
-    public final EnumPath<OperationStatus> status = createEnum("status", OperationStatus.class);
+    public final EnumPath<crud.mvc.project.entity.enums.OperationStatus> status = createEnum("status", crud.mvc.project.entity.enums.OperationStatus.class);
 
     public final QCashDesk toCashDesk;
 

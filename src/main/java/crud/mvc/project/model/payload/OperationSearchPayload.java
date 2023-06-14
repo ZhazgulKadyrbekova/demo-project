@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 
 public class OperationSearchPayload {
     public int page = 0;
-    public int size = 5;
 
     @NotBlank(message = "Make sure to enter valid info to search")
     @NotNull(message = "Make sure to enter valid info to search")
@@ -17,14 +16,6 @@ public class OperationSearchPayload {
 
     public void setPage(int page) {
         this.page = page;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 
     public String getSearch() {

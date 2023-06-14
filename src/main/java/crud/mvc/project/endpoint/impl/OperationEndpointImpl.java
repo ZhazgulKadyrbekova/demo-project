@@ -1,5 +1,6 @@
 package crud.mvc.project.endpoint.impl;
 
+import crud.mvc.project.config.PaginationProperties;
 import crud.mvc.project.endpoint.OperationEndpoint;
 import crud.mvc.project.exception.OperationFilterException;
 import crud.mvc.project.mapper.OperationMapperService;
@@ -17,10 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class OperationEndpointImpl implements OperationEndpoint {
     private final OperationQueryService operationQueryService;
     private final OperationMapperService operationMapperService;
+    private final PaginationProperties paginationProperties;
 
-    public OperationEndpointImpl(OperationQueryService operationQueryService, OperationMapperService operationMapperService) {
+    public OperationEndpointImpl(OperationQueryService operationQueryService,
+                                 OperationMapperService operationMapperService,
+                                 PaginationProperties paginationProperties) {
         this.operationQueryService = operationQueryService;
         this.operationMapperService = operationMapperService;
+        this.paginationProperties = paginationProperties;
     }
 
     @Override
@@ -29,7 +34,7 @@ public class OperationEndpointImpl implements OperationEndpoint {
 
         PageRequest request = PageRequest.of(
                 operationGetAllPayload.page,
-                operationGetAllPayload.size
+                paginationProperties.getPage()
         );
 
         return operationQueryService
@@ -43,7 +48,7 @@ public class OperationEndpointImpl implements OperationEndpoint {
 
         PageRequest request = PageRequest.of(
                 operationSearchPayload.page,
-                operationSearchPayload.size
+                paginationProperties.getPage()
         );
 
         return operationQueryService
@@ -57,7 +62,7 @@ public class OperationEndpointImpl implements OperationEndpoint {
 
         PageRequest request = PageRequest.of(
                 operationFilterPayload.page,
-                operationFilterPayload.size
+                paginationProperties.getPage()
         );
 
         if (operationFilterPayload.dateFrom != null && operationFilterPayload.dateTo != null

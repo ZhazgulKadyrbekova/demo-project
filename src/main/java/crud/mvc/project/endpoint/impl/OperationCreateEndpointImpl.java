@@ -47,7 +47,7 @@ public class OperationCreateEndpointImpl implements OperationCreateEndpoint {
         }
         checkPhoneNumberInformation(senderPhoneNumber, receiverPhoneNumber);
 
-        CashDesk fromCashDesk = cashDeskQueryService.getByName(cashDeskName);
+        CashDesk fromCashDesk = cashDeskQueryService.getByUsername(cashDeskName);
         CashDesk toCashDesk = cashDeskQueryService.getById(createPayload.toCashDesk);
 
         checkCashDeskInformation(fromCashDesk.getId(), toCashDesk.getId());

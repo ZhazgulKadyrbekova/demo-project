@@ -1,5 +1,6 @@
 package crud.mvc.project.endpoint.impl;
 
+import crud.mvc.project.config.PaginationProperties;
 import crud.mvc.project.endpoint.CashDeskEndpoint;
 import crud.mvc.project.entity.CashDesk;
 import crud.mvc.project.entity.CashDeskAuth;
@@ -31,15 +32,17 @@ public class CashDeskEndpointImpl implements CashDeskEndpoint {
     private final CashDeskAuthEntityService authEntityService;
     private final CashDeskMapperService mapperService;
     private final PasswordEncoder encoder;
+    private final PaginationProperties paginationProperties;
 
     public CashDeskEndpointImpl(CashDeskQueryService queryService, CashDeskEntityService entityService,
                                 CashDeskAuthEntityService authEntityService, CashDeskMapperService mapperService,
-                                PasswordEncoder encoder) {
+                                PasswordEncoder encoder, PaginationProperties paginationProperties) {
         this.queryService = queryService;
         this.entityService = entityService;
         this.authEntityService = authEntityService;
         this.mapperService = mapperService;
         this.encoder = encoder;
+        this.paginationProperties = paginationProperties;
     }
 
     @Override
@@ -74,7 +77,7 @@ public class CashDeskEndpointImpl implements CashDeskEndpoint {
     public Page<CashDeskDto> getAll(CashDeskGetAllPayload payload) {
         PageRequest request = PageRequest.of(
                 payload.page,
-                payload.size
+                paginationProperties.getPage()
         );
         return queryService
                 .getAll(request)

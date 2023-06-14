@@ -1,8 +1,10 @@
 package crud.mvc.project.service.impl;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
 import crud.mvc.project.entity.CashDesk;
 import crud.mvc.project.entity.QCashDesk;
+import crud.mvc.project.entity.QCashDeskAuth;
 import crud.mvc.project.exception.NotFoundException;
 import crud.mvc.project.service.CashDeskEntityService;
 import crud.mvc.project.service.CashDeskQueryService;
@@ -10,15 +12,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
 public class CashDeskQueryServiceImpl implements CashDeskQueryService {
 
     private final CashDeskEntityService entityService;
+    private final EntityManager entityManager;
 
-    public CashDeskQueryServiceImpl(CashDeskEntityService entityService) {
+    public CashDeskQueryServiceImpl(CashDeskEntityService entityService, EntityManager entityManager) {
         this.entityService = entityService;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -41,11 +46,20 @@ public class CashDeskQueryServiceImpl implements CashDeskQueryService {
     }
 
     @Override
-    public CashDesk getByName(String name) {
-        BooleanBuilder builder = new BooleanBuilder();
+    public CashDesk getByUsername(String username) {
+        QCashDeskAuth qCashDeskAuth = QCashDeskAuth.cashDeskAuth;
+        QCashDesk qCashDesk = QCashDesk.cashDesk;
 
-        builder.and(QCashDesk.cashDesk.name.eq(name));
-        return entityService.findByQuery(builder);
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(qCashDeskAuth.username.eq(username));
+
+        return new JPAQuery<CashDesk> (entityManager)
+                .from(qCashDesk)
+                .select(qCashDesk)
+                .innerJoin(qCashDeskAuth)
+                .on(qCashDesk.auth.id.eq(qCashDeskAuth.id))
+                .where(builder)
+                .fetchOne();
     }
 
     @Override

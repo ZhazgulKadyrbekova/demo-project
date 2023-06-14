@@ -19,10 +19,6 @@ public class OperationFilterPayload {
     @Setter(AccessLevel.NONE)
     public int page = 0;
 
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    public int size = 5;
-
     public List<Long> fromCashDeskIds;
     public List<Long> toCashDeskIds;
 
@@ -43,29 +39,5 @@ public class OperationFilterPayload {
 
     public void setPage(int page) {
         this.page = page;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    @Override
-    public String toString() {
-        return "OperationFilterPayload{" +
-                "page=" + page +
-                ", size=" + size +
-                ", fromCashDeskIds=" + fromCashDeskIds +
-                ", toCashDeskIds=" + toCashDeskIds +
-                ", dateFrom=" + dateFrom +
-                ", dateTo=" + dateTo +
-                ", status=" + status +
-                ", currencies=" + currencies +
-                ", amountFrom=" + amountFrom +
-                ", amountTo=" + amountTo +
-                '}';
     }
 }
