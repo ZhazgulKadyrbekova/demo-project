@@ -7,12 +7,16 @@ import crud.mvc.project.model.dto.CashDeskDto;
 import crud.mvc.project.model.dto.OperationCreateDto;
 import crud.mvc.project.model.dto.OperationDto;
 import crud.mvc.project.model.dto.OperationUpdateDto;
+import crud.mvc.project.util.DateTimeFormatterUtil;
 import org.springframework.stereotype.Service;
+
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class OperationMapperServiceImpl implements OperationMapperService {
 
     private final CashDeskMapperService cashDeskMapperService;
+    DateTimeFormatter formatter = DateTimeFormatterUtil.getFormatter();
 
     public OperationMapperServiceImpl(CashDeskMapperService cashDeskMapperService) {
         this.cashDeskMapperService = cashDeskMapperService;
@@ -50,6 +54,7 @@ public class OperationMapperServiceImpl implements OperationMapperService {
     public OperationDto mapToDto(Operation operation) {
         CashDeskDto from = cashDeskMapperService.mapToDto(operation.getFromCashDesk());
         CashDeskDto to = cashDeskMapperService.mapToDto(operation.getToCashDesk());
+        String createdDate = operation.getCreatedDate().format(formatter);
 
         return new OperationDto(
                 operation.getAmount(),
@@ -62,7 +67,7 @@ public class OperationMapperServiceImpl implements OperationMapperService {
                 operation.getReceiverPhoneNumber(),
                 operation.getStatus(),
                 operation.getDescription(),
-                operation.getCreatedDate()
+                createdDate
         );
     }
 }

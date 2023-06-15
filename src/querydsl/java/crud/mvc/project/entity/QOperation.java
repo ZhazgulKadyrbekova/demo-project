@@ -50,6 +50,8 @@ public class QOperation extends EntityPathBase<Operation> {
 
     public final QCashDesk toCashDesk;
 
+    public final DateTimePath<java.time.LocalDateTime> updatedDate = createDateTime("updatedDate", java.time.LocalDateTime.class);
+
     public QOperation(String variable) {
         this(Operation.class, forVariable(variable), INITS);
     }

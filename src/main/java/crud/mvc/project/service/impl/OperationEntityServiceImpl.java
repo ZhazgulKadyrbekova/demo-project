@@ -31,6 +31,8 @@ public class OperationEntityServiceImpl implements OperationEntityService {
                 .senderPhoneNumber(model.senderPhoneNumber)
                 .receiverPhoneNumber(model.receiverPhoneNumber)
                 .description(model.description)
+                .status(model.status)
+                .code(model.code)
                 .build();
 
         return repository.save(operation);

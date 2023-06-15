@@ -4,6 +4,7 @@ import crud.mvc.project.endpoint.CashDeskEndpoint;
 import crud.mvc.project.model.dto.CashDeskDto;
 import crud.mvc.project.model.payload.CashDeskCreatePayload;
 import crud.mvc.project.model.payload.CashDeskGetAllPayload;
+import crud.mvc.project.util.PageNumberUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/cash-desk")
@@ -33,7 +32,7 @@ public class CashDeskController {
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute @Validated CashDeskCreatePayload cashDeskCreatePayload, Model model) {
+    public String create(@ModelAttribute @Validated CashDeskCreatePayload cashDeskCreatePayload) {
         cashDeskEndpoint.create(cashDeskCreatePayload);
 
         return "redirect:/cash-desk/get-all";
@@ -42,14 +41,9 @@ public class CashDeskController {
     @RequestMapping("/get-all")
     public String getAllCashDesks(CashDeskGetAllPayload payload, Model model) {
         Page<CashDeskDto> dtos = cashDeskEndpoint.getAll(payload);
+        List<Integer> pageNumbers = PageNumberUtil.getPageNumber(dtos);
 
-        int totalPages = dtos.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
+        model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("cashDeskDtos", dtos);
 
         return "cashDesks";

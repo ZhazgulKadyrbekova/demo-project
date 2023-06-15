@@ -3,6 +3,7 @@ package crud.mvc.project.endpoint.impl;
 import crud.mvc.project.endpoint.OperationCreateEndpoint;
 import crud.mvc.project.entity.CashDesk;
 import crud.mvc.project.entity.Operation;
+import crud.mvc.project.entity.enums.OperationStatus;
 import crud.mvc.project.exception.CreateOperationException;
 import crud.mvc.project.exception.InvalidMoneyAmountException;
 import crud.mvc.project.mapper.OperationMapperService;
@@ -11,6 +12,7 @@ import crud.mvc.project.model.payload.OperationCreatePayload;
 import crud.mvc.project.model.request.OperationCreateRequest;
 import crud.mvc.project.service.CashDeskQueryService;
 import crud.mvc.project.service.OperationEntityService;
+import crud.mvc.project.util.CodeUtilHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,35 +35,37 @@ public class OperationCreateEndpointImpl implements OperationCreateEndpoint {
     @Override
     @Transactional
     public OperationCreateDto create(String cashDeskName, OperationCreatePayload createPayload) {
-        checkBalanceInformation(createPayload.amount);
-        checkNameInformation(createPayload.senderName, createPayload.receiverName);
+        checkBalanceInformation(createPayload.getAmount());
+        checkNameInformation(createPayload.getSenderName(), createPayload.getReceiverName());
 
         String senderPhoneNumber = null;
-        if (createPayload.senderPhoneNumber != null) {
-            senderPhoneNumber = String.valueOf(createPayload.senderPhoneNumber);
+        if (createPayload.getSenderPhoneNumber() != null) {
+            senderPhoneNumber = String.valueOf(createPayload.getSenderPhoneNumber());
         }
 
         String receiverPhoneNumber = null;
-        if (createPayload.receiverPhoneNumber != null) {
-            receiverPhoneNumber = String.valueOf(createPayload.receiverPhoneNumber);
+        if (createPayload.getReceiverPhoneNumber() != null) {
+            receiverPhoneNumber = String.valueOf(createPayload.getReceiverPhoneNumber());
         }
         checkPhoneNumberInformation(senderPhoneNumber, receiverPhoneNumber);
 
         CashDesk fromCashDesk = cashDeskQueryService.getByUsername(cashDeskName);
-        CashDesk toCashDesk = cashDeskQueryService.getById(createPayload.toCashDesk);
+        CashDesk toCashDesk = cashDeskQueryService.getById(createPayload.getToCashDesk());
 
         checkCashDeskInformation(fromCashDesk.getId(), toCashDesk.getId());
 
         OperationCreateRequest operationCreateRequest = new OperationCreateRequest(
-                createPayload.amount,
-                createPayload.currency,
+                createPayload.getAmount(),
+                createPayload.getCurrency(),
                 fromCashDesk,
                 toCashDesk,
-                createPayload.senderName,
-                createPayload.receiverName,
+                createPayload.getSenderName(),
+                createPayload.getReceiverName(),
                 senderPhoneNumber,
                 receiverPhoneNumber,
-                createPayload.description
+                createPayload.getDescription(),
+                OperationStatus.CREATED,
+                CodeUtilHelper.generateCode()
         );
         Operation operation = operationEntityService.create(operationCreateRequest);
         return operationMapperService.mapToCreateDto(operation);

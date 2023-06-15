@@ -6,11 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -65,13 +66,12 @@ public class Operation {
     @Column(name = "code", unique = true, updatable = false, nullable = false)
     private String code;
 
+    @CreationTimestamp
     @Column(name = "created_date", nullable = false)
     private LocalDateTime createdDate;
 
-    @PrePersist
-    public void init(){
-        this.createdDate  = LocalDateTime.now();
-        this.status = OperationStatus.CREATED;
-        this.code = UUID.randomUUID().toString();
-    }
+    @UpdateTimestamp
+    @Column(name = "updated_date", nullable = false)
+    private LocalDateTime updatedDate;
+
 }

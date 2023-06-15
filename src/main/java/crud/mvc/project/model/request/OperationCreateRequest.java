@@ -2,6 +2,7 @@ package crud.mvc.project.model.request;
 
 import crud.mvc.project.entity.CashDesk;
 import crud.mvc.project.entity.enums.Currency;
+import crud.mvc.project.entity.enums.OperationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,5 +22,6 @@ public class OperationCreateRequest {
     public String senderPhoneNumber;
     public String receiverPhoneNumber;
     public String description;
-
+    public OperationStatus status;
+    public String code;
 }

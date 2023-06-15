@@ -123,6 +123,7 @@
         <th scope="col">Phone number</th>
         <th scope="col">Receiver name</th>
         <th scope="col">Phone number</th>
+        <th scope="col">Created date</th>
         <th scope="col">Description</th>
     </tr>
     </thead>
@@ -137,12 +138,25 @@
         <td th:text="${operation.senderPhoneNumber}"></td>
         <td th:text="${operation.receiverName}"></td>
         <td th:text="${operation.receiverPhoneNumber}"></td>
+        <td th:text="${operation.createdDate}"></td>
         <td th:text="${operation.description}"></td>
     </tr>
     </tbody>
 </table>
 
 <table class="table" th:fragment="cash-desk-table(dtos)">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="cashDesk : ${dtos.content}">
+        <td th:text="${cashDesk.name}"></td>
+    </tr>
+</table>
+
+<table class="table" th:fragment="admin-cash-desk-table(dtos)">
     <thead>
     <tr>
         <th scope="col">Name</th>

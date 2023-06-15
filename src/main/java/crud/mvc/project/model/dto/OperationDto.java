@@ -7,22 +7,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 public class OperationDto {
-    public BigDecimal amount;
-    public Currency currency;
-    public CashDeskDto fromCashDesk;
-    public CashDeskDto toCashDesk;
-    public String senderName;
-    public String receiverName;
-    public String senderPhoneNumber;
-    public String receiverPhoneNumber;
-    public OperationStatus status;
-    public String description;
-    public LocalDateTime createdDate;
-
+    BigDecimal amount;
+    Currency currency;
+    CashDeskDto fromCashDesk;
+    CashDeskDto toCashDesk;
+    String senderName;
+    String receiverName;
+    String senderPhoneNumber;
+    String receiverPhoneNumber;
+    OperationStatus status;
+    String description;
+    String createdDate;
 }

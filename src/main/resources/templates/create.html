@@ -10,15 +10,15 @@
 </nav>
 
 <!-- Main content -->
-<form method="POST" th:action="@{/operation/create}" th:object="${createPayload}" class="w-75 mx-auto">
+<form method="POST" th:action="@{/operation/create/}" th:object="${createPayload}" class="form w-75 mx-auto">
     <div class="mb-3">
-        <label for="formAmount" class="form-label">Amount</label>
-        <input type="number" name="amount" class="form-control" id="formAmount" placeholder="100">
+        <label for="amount" class="form-label">Amount</label>
+        <input type="number" th:field="*{amount}" class="form-control" id="amount" placeholder="100" required>
     </div>
 
     <div class="mb-3">
         <label for="toCashDesk">Choose toCashDesk</label>
-        <select type="number" class="form-select" id="toCashDesk" field="*{toCashDesk}" name="toCashDesk">
+        <select type="number" class="form-select" id="toCashDesk" th:field="*{toCashDesk}" name="toCashDesk">
             <option th:each="cashDesk : ${dtos}"
                     th:value="${cashDesk.id}"
                     th:text="${cashDesk.name}"></option>
@@ -27,7 +27,7 @@
 
     <div class="mb-3">
         <label for="currency">Choose currency</label>
-        <select type="text" id="currency" class="form-select" field="*{currency}" name="currency">
+        <select type="text" id="currency" class="form-select" th:field="*{currency}" name="currency">
             <option th:each="currency: ${currencies}"
                     th:value="${currency}"
                     th:text="${currency}"></option>
@@ -35,23 +35,23 @@
     </div>
     <div class="mb-3">
         <label for="formSenderName" class="form-label">Sender name</label>
-        <input class="form-control" name="senderName" id="formSenderName" placeholder="Name surname">
+        <input class="form-control" th:field="*{senderName}" id="formSenderName" placeholder="Name surname" required>
     </div>
     <div class="mb-3">
         <label for="formSenderPhoneNumber" class="form-label">Sender phone number</label>
-        <input class="form-control" name="senderPhoneNumber" id="formSenderPhoneNumber" placeholder="996 555 12 34 56">
+        <input class="form-control" th:field="*{senderPhoneNumber}" id="formSenderPhoneNumber" placeholder="996 555 12 34 56">
     </div>
     <div class="mb-3">
         <label for="formReceiverName" class="form-label">Receiver name</label>
-        <input class="form-control" name="receiverName" id="formReceiverName" placeholder="Name surname">
+        <input class="form-control" th:field="*{receiverName}" id="formReceiverName" placeholder="Name surname" required>
     </div>
     <div class="mb-3">
         <label for="formReceiverPhoneNumber" class="form-label">Receiver phone number</label>
-        <input class="form-control" name="receiverPhoneNumber" id="formReceiverPhoneNumber" placeholder="996 555 12 34 56">
+        <input class="form-control" th:field="*{receiverPhoneNumber}" id="formReceiverPhoneNumber" placeholder="996 555 12 34 56">
     </div>
     <div class="mb-3">
         <label for="formDescription" class="form-label">Description</label>
-        <input class="form-control" name="description" id="formDescription" placeholder="Description">
+        <input class="form-control" th:field="*{description}" id="formDescription" placeholder="Description">
     </div>
     <button type="submit" name="submit" value="value" class="link-button btn btn-outline-success">Create</button>
 </form>

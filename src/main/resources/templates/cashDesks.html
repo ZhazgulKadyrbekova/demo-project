@@ -11,7 +11,11 @@
 
 <div class="w-75 mx-auto">
 
-    <table th:replace="general.html :: cash-desk-table(${cashDeskDtos})">
+    <table sec:authorize="hasAuthority('ADMIN')" th:replace="general.html :: admin-cash-desk-table(${cashDeskDtos})">
+        <p th:if="${#fields.hasErrors('')}"></p>
+    </table>
+
+    <table sec:authorize="hasAuthority('CASH_DESK')" th:replace="general.html :: cash-desk-table(${cashDeskDtos})">
     </table>
 
     <div sec:authorize="hasAuthority('ADMIN')" class="w-50 mb-2">

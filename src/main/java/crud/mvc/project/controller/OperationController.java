@@ -11,9 +11,9 @@ import crud.mvc.project.model.dto.OperationCreateDto;
 import crud.mvc.project.model.dto.OperationDto;
 import crud.mvc.project.model.dto.OperationUpdateDto;
 import crud.mvc.project.model.payload.*;
+import crud.mvc.project.util.PageNumberUtil;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/operation")
@@ -54,21 +52,18 @@ public class OperationController {
 
         model.addAttribute("dtos", dtos);
         model.addAttribute("currencies", currencies);
+        model.addAttribute("createPayload", new OperationCreatePayload());
         return "create";
     }
 
-    @RequestMapping(
-            path = "create",
-            method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping("create")
     public String create(
             Principal principal,
-            @Validated OperationCreatePayload createPayload,
+            @Validated @ModelAttribute OperationCreatePayload createPayload,
             Model model) {
         String name = principal.getName();
 
         OperationCreateDto dto = operationCreateEndpoint.create(name, createPayload);
-
         model.addAttribute("operationCreateDto", dto);
 
         return "saved";
@@ -97,14 +92,9 @@ public class OperationController {
         List<CashDeskDto> dtos = cashDeskEndpoint.getAll();
         List<Currency> currencies = List.of(Currency.values());
         List<OperationStatus> statuses = List.of(OperationStatus.values());
+        List<Integer> pageNumbers = PageNumberUtil.getPageNumber(operationDtos);
 
-        int totalPages = operationDtos.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
+        model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("operationDtos", operationDtos);
         model.addAttribute("cashDeskDtos", dtos);
         model.addAttribute("currencies", currencies);
@@ -118,15 +108,9 @@ public class OperationController {
         List<CashDeskDto> dtos = cashDeskEndpoint.getAll();
         List<Currency> currencies = List.of(Currency.values());
         List<OperationStatus> statuses = List.of(OperationStatus.values());
+        List<Integer> pageNumbers = PageNumberUtil.getPageNumber(operationDtos);
 
-        int totalPages = operationDtos.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
-
+        model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("operationDtos", operationDtos);
         model.addAttribute("cashDeskDtos", dtos);
         model.addAttribute("currencies", currencies);
@@ -140,15 +124,9 @@ public class OperationController {
         List<CashDeskDto> dtos = cashDeskEndpoint.getAll();
         List<Currency> currencies = List.of(Currency.values());
         List<OperationStatus> statuses = List.of(OperationStatus.values());
+        List<Integer> pageNumbers = PageNumberUtil.getPageNumber(operationDtos);
 
-        int totalPages = operationDtos.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
-
+        model.addAttribute("pageNumbers", pageNumbers);
         model.addAttribute("operationDtos", operationDtos);
         model.addAttribute("cashDeskDtos", dtos);
         model.addAttribute("currencies", currencies);
