@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class OperationSearchPayload {
-    public int page = 0;
+    public int page = 1;
 
     @NotBlank(message = "Make sure to enter valid info to search")
     @NotNull(message = "Make sure to enter valid info to search")

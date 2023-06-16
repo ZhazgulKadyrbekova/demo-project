@@ -1,7 +1,7 @@
 package crud.mvc.project.model.payload;
 
 public class CashDeskGetAllPayload {
-    public int page = 0;
+    int page = 1;
 
     public int getPage() {
         return page;

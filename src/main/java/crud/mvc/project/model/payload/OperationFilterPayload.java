@@ -17,7 +17,7 @@ public class OperationFilterPayload {
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    public int page = 0;
+    public int page = 1;
 
     public List<Long> fromCashDeskIds;
     public List<Long> toCashDeskIds;

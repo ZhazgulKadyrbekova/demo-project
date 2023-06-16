@@ -31,10 +31,10 @@ public class OperationEndpointImpl implements OperationEndpoint {
     @Override
     @Transactional(readOnly = true)
     public Page<OperationDto> getAll(OperationGetAllPayload operationGetAllPayload) {
-
+        int page = operationGetAllPayload.getPage() - 1;
         PageRequest request = PageRequest.of(
-                operationGetAllPayload.page,
-                paginationProperties.getPage()
+                Math.max(page, 0),
+                paginationProperties.getSize()
         );
 
         return operationQueryService
@@ -45,10 +45,10 @@ public class OperationEndpointImpl implements OperationEndpoint {
     @Override
     @Transactional(readOnly = true)
     public Page<OperationDto> search(OperationSearchPayload operationSearchPayload) {
-
+        int page = operationSearchPayload.getPage() - 1;
         PageRequest request = PageRequest.of(
-                operationSearchPayload.page,
-                paginationProperties.getPage()
+                Math.max(page, 0),
+                paginationProperties.getSize()
         );
 
         return operationQueryService
@@ -59,10 +59,10 @@ public class OperationEndpointImpl implements OperationEndpoint {
     @Override
     @Transactional(readOnly = true)
     public Page<OperationDto> filter(OperationFilterPayload operationFilterPayload) {
-
+        int page = operationFilterPayload.getPage() - 1;
         PageRequest request = PageRequest.of(
-                operationFilterPayload.page,
-                paginationProperties.getPage()
+                Math.max(page, 0),
+                paginationProperties.getSize()
         );
 
         if (operationFilterPayload.dateFrom != null && operationFilterPayload.dateTo != null

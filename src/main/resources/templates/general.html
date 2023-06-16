@@ -51,11 +51,11 @@
     </div>
 </nav>
 
-<div th:fragment="filter-table(cashDeskDtos, currencies, statuses)">
+<div th:fragment="filter-table(cashDeskDtos, currencies, statuses)" class="mt-1">
     <form class="d-flex flex-column" th:action="@{/operation/filter}" th:object="${operationFilterPayload}">
         <div class="row mb-2">
             <div class="col">
-                <label for="fromCashDesk">From cash desk</label>
+                <label for="fromCashDesk">From </label>
                 <select class="selectpicker" id="fromCashDesk" name="fromCashDeskIds" multiple>
                     <option data-hidden="true">Choose one...</option>
                     <option th:each="cashDesk : ${cashDeskDtos}"
@@ -64,7 +64,7 @@
                 </select>
             </div>
             <div class="col">
-                <label for="toCashDesk">To cash desk</label>
+                <label for="toCashDesk">To </label>
                 <select class="selectpicker" id="toCashDesk" field="*{toCashDeskIds}" name="toCashDeskIds" multiple>
                     <option th:each="cashDesk : ${cashDeskDtos}"
                             th:value="${cashDesk.id}"
@@ -173,19 +173,19 @@
 <nav aria-label="Page navigation" class="paging" th:fragment="table-pagination(pageable, pageNumbers)">
     <ul class="pagination" th:object="${pageable}" th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
         <li class="page-item" th:class="${pageable.first} ? 'disabled' : ''">
-            <a th:if="${not pageable.first}" th:href="${urlBuilder.replaceQueryParam('page', pageable.number - 1).build().toUriString()}"
+            <a th:if="${not pageable.first}" th:href="${urlBuilder.replaceQueryParam('page', pageable.number).build().toUriString()}"
                class="page-link" aria-label="Previous">Previous</a>
         </li>
 
         <li class="page-item pagination" th:each="pageNumber : ${pageNumbers}">
-            <a th:href="${urlBuilder.replaceQueryParam('page', pageNumber - 1).build().toUriString()}"
+            <a th:href="${urlBuilder.replaceQueryParam('page', pageNumber).build().toUriString()}"
                th:text="${pageNumber}"
                class="page-link"></a>
         </li>
 
 
         <li class="page-item" th:class="${pageable.last} ? 'disabled' : ''">
-            <a th:if="${not pageable.last}" th:href="${urlBuilder.replaceQueryParam('page', pageable.number + 1).build().toUriString()}"
+            <a th:if="${not pageable.last}" th:href="${urlBuilder.replaceQueryParam('page', pageable.number + 2).build().toUriString()}"
                class="page-link"  aria-label="Next">Next</a>
         </li>
     </ul>

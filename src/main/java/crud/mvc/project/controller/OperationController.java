@@ -70,7 +70,8 @@ public class OperationController {
     }
 
     @GetMapping("process")
-    public String processForm() {
+    public String processForm(Model model) {
+        model.addAttribute("processPayload", new OperationProcessPayload());
         return "process";
     }
 

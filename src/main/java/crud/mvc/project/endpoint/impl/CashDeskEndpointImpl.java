@@ -75,9 +75,11 @@ public class CashDeskEndpointImpl implements CashDeskEndpoint {
     @Override
     @Transactional(readOnly = true)
     public Page<CashDeskDto> getAll(CashDeskGetAllPayload payload) {
+
+        int page = payload.getPage() - 1;
         PageRequest request = PageRequest.of(
-                payload.page,
-                paginationProperties.getPage()
+                Math.max(page, 0),
+                paginationProperties.getSize()
         );
         return queryService
                 .getAll(request)
